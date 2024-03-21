@@ -1,20 +1,22 @@
 <script>
   import FilterButton from "./FilterButton.svelte";
   import MoreActions from "./MoreActions.svelte";
+  import NewTodo from "./NewTodo.svelte";
   import Todo from "./Todo.svelte";
 
   export let todos = [];
   $: totalTodos = todos.length;
   $: completedTodos = todos.filter((todo) => todo.completed).length;
-  let newTodoName = "";
 
   function removeTodo(todo) {
     todos = todos.filter((t) => t.id !== todo.id);
   }
 
-  function addTodo() {
-    todos = [...todos, { id: 999, name: newTodoName, completed: false }];
-    newTodoName = "";
+  $: nextTodoId = todos.length + 1;
+
+  function addTodo(name) {
+    // todos = [...todos, { id: newTodoId, name, completed: false }];
+    todos = [...todos, { id: nextTodoId, name, completed: false }];
   }
 
   let filter = "all";
@@ -24,7 +26,6 @@
       : filter === "completed"
         ? todos.filter((t) => t.completed)
         : todos;
-  $: console.log(filter);
 
   function updateTodo(todo) {
     const i = todos.findIndex((t) => t.id === todo.id);
@@ -42,21 +43,7 @@
 <!-- Todos.svelte -->
 <div class="todoapp stack-large">
   <!-- NewTodo -->
-  <form on:submit|preventDefault={addTodo}>
-    <h2 class="label-wrapper">
-      <label for="todo-0" class="label__lg"> What needs to be done? </label>
-    </h2>
-    <input
-      bind:value={newTodoName}
-      type="text"
-      id="todo-0"
-      autocomplete="off"
-      class="input input__lg"
-    />
-    <button type="submit" disabled="" class="btn btn__primary btn__lg">
-      Add
-    </button>
-  </form>
+  <NewTodo autofocus on:addTodo={(e) => addTodo(e.detail)} />
 
   <!-- Filter -->
   <FilterButton bind:filter />
