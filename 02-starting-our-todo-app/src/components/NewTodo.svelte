@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher, onMount } from "svelte";
+  import { selectOnFocus } from "../actions";
   const dispatch = createEventDispatcher();
 
   export let autofocus = false;
@@ -31,6 +32,7 @@
   <input
     bind:value={name}
     bind:this={nameEl}
+    use:selectOnFocus
     type="text"
     id="todo-0"
     autocomplete="off"

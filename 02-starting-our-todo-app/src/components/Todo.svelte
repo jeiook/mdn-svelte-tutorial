@@ -9,6 +9,7 @@
   let editing = false;
   let name = todo.name;
   let nameEl;
+  let editButtonPressed = false; // track whether edit button was pressed
 
   function update(updatedTodo) {
     todo = { ...todo, ...updatedTodo };
@@ -31,13 +32,18 @@
 
   async function onEdit() {
     editing = true;
-    await tick();
-    nameEl.focus();
+    editButtonPressed = true;
   }
 
   function onToggle() {
     update({ completed: !todo.completed });
   }
+
+  const focusOnInit = (node) => {
+    node && typeof node.focus === "function" && node.focus();
+  };
+
+  const focusEditButton = (node) => editButtonPressed && node.focus();
 </script>
 
 <div class="stack-small">
@@ -56,6 +62,7 @@
           bind:value={name}
           bind:this={nameEl}
           use:selectOnFocus
+          use:focusOnInit
           type="text"
           id="todo-{todo.id}"
           autocomplete="off"
@@ -88,7 +95,7 @@
       <label for="todo-{todo.id}" class="todo-label">{todo.name}</label>
     </div>
     <div class="btn-group">
-      <button type="button" class="btn" on:click={onEdit}>
+      <button type="button" class="btn" on:click={onEdit} use:focusEditButton>
         Edit <span class="visually-hidden">{todo.name}</span>
       </button>
       <button type="button" class="btn btn__danger" on:click={onRemove}>
