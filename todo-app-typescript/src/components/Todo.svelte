@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { createEventDispatcher, tick } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 	import { selectOnFocus } from '../actions';
+	import type { TodoType } from '../types/todo.types';
 
-	export let todo: any; // todo: apply todo type
+	export let todo: TodoType;
 
 	const dispatch = createEventDispatcher();
 
@@ -11,8 +12,7 @@
 	let nameEl;
 	let editButtonPressed = false; // track whether edit button was pressed
 
-	// todo: apply todo type
-	function update(updatedTodo: any) {
+	function update(updatedTodo: Partial<TodoType>) {
 		todo = { ...todo, ...updatedTodo };
 		dispatch('update', todo);
 	}
@@ -55,7 +55,6 @@
 			<div class="form-group">
 				<!-- edit name -->
 				<label for="todo-{todo.id}" class="todo-label">New name for '{todo.name}'</label>
-				<!-- TODO: verify that moving keydown works -->
 				<input
 					bind:value={name}
 					bind:this={nameEl}

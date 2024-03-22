@@ -1,18 +1,22 @@
+<script lang="ts" context="module">
+	export type Filter = 'all' | 'active' | 'completed';
+</script>
+
 <script lang="ts">
+	import type { SvelteComponent } from 'svelte';
+	import type { TodoType } from '../types/todo.types';
 	import { alert } from '../stores';
 	import FilterButton from './FilterButton.svelte';
 	import MoreActions from './MoreActions.svelte';
 	import NewTodo from './NewTodo.svelte';
 	import Todo from './Todo.svelte';
 	import TodoStatus from './TodoStatus.svelte';
-	import type { SvelteComponent } from 'svelte';
 
-	export let todos: any[] = [];
+	export let todos: TodoType[] = [];
 
 	let todoStatus: SvelteComponent; // reference to TodoStatus component instance
 
-	// TODO: apply todo type
-	function removeTodo(todo: any) {
+	function removeTodo(todo: TodoType) {
 		todos = todos.filter((t) => t.id !== todo.id);
 		todoStatus.focus();
 		$alert = `Todo '${todo.name}' has been deleted`;
@@ -25,10 +29,8 @@
 		$alert = `Todo '${name}' has been added`;
 	}
 
-	let filter = 'all';
-	// TODO: create a filter type with string literals
-	// TODO: apply todo type
-	const filterTodos = (filter: string, todos: any[]) =>
+	let filter: Filter = 'all';
+	const filterTodos = (filter: Filter, todos: TodoType[]) =>
 		filter === 'active'
 			? todos.filter((todo) => !todo.completed)
 			: filter === 'completed'
@@ -44,8 +46,7 @@
 		}
 	}
 
-	// TODO: apply todo type
-	function updateTodo(todo: any) {
+	function updateTodo(todo: TodoType) {
 		const i = todos.findIndex((t) => t.id === todo.id);
 		if (todos[i].name !== todo.name) {
 			$alert = `Todo '${todos[i].name}' has been renamed to '${todo.name}'`;

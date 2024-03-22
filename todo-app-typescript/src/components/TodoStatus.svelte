@@ -1,6 +1,7 @@
 <script lang="ts">
-	// TODO: apply todo type
-	export let todos: any[];
+	import type { TodoType } from '../types/todo.types';
+
+	export let todos: TodoType[];
 
 	$: totalTodos = todos.length;
 	$: completedTodos = todos.filter((t) => t.completed).length;

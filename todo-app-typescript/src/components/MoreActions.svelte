@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import type { TodoType } from '../types/todo.types';
 
-	export let todos: any[]; // todo: apply todo type
+	export let todos: TodoType[];
 
 	const dispatch = createEventDispatcher();
 
