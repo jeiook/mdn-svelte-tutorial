@@ -40,13 +40,13 @@
 		update({ completed: !todo.completed });
 	}
 
-	// TODO: find exact node type
-	const focusOnInit = (node: any) => {
+	const focusOnInit = (node: HTMLElement) => {
 		node && typeof node.focus === 'function' && node.focus();
 	};
 
-	// TODO: find exact node type
-	const focusEditButton = (node: any) => editButtonPressed && node.focus();
+	const focusEditButton = (node: HTMLElement) => {
+		editButtonPressed && node.focus();
+	};
 </script>
 
 <div class="stack-small">
