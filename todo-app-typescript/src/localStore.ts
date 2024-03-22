@@ -1,11 +1,13 @@
-import { writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
+import type { JsonValue } from './types/json.type';
 
-export const localStore = (key: string, initial: unknown) => {
-	const toString = (value: unknown) => JSON.stringify(value, null, 2);
+export const localStore = <T extends JsonValue>(key: string, initial: T): Writable<T> => {
+	const toString = (value: T) => JSON.stringify(value, null, 2);
 	const toObj = JSON.parse;
 
 	if (typeof localStorage === 'undefined') {
-		return;
+		// temporary solution for localStore being called before components have mounted
+		return writable();
 	}
 
 	if (localStorage.getItem(key) === null) {
@@ -18,7 +20,7 @@ export const localStore = (key: string, initial: unknown) => {
 
 	return {
 		subscribe,
-		set: (value: string) => {
+		set: (value: T) => {
 			localStorage.setItem(key, toString(value));
 			return set(value);
 		},

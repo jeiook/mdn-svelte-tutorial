@@ -3,10 +3,10 @@
 	import { selectOnFocus } from '../actions';
 	const dispatch = createEventDispatcher();
 
-	export let autofocus = false;
+	export let autofocus: boolean = false;
 
 	let name = '';
-	let nameEl: HTMLInputElement;
+	let nameEl: HTMLElement;
 
 	const addTodo = () => {
 		dispatch('addTodo', name);

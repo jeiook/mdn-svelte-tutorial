@@ -6,7 +6,7 @@
 	$: totalTodos = todos.length;
 	$: completedTodos = todos.filter((t) => t.completed).length;
 
-	let headingEl: HTMLHeadingElement;
+	let headingEl: HTMLElement;
 
 	export function focus() {
 		headingEl.focus();
