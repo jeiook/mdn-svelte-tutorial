@@ -300,3 +300,18 @@ body {
 .c-cb > input[type='checkbox']:checked + label::after {
 	opacity: 1;
 }
+
+.progress-bar {
+	border: 5px solid black;
+}
+
+.progress-bar .box {
+	padding: 2px 0;
+	background-color: rebeccapurple;
+	color: white;
+	text-align: center;
+}
+
+.progress-bar .box p {
+	margin: 0;
+}
